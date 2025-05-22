@@ -1,1 +1,1 @@
-echo # calculator
+# calculator
