@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charest="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Bin</title>
+    <style>
+        @media(max-width:600px){
+            div.empty{display:none;}
+            div.vertical{display:block;}
+            div.horizontal{display:none;}
+        }
+        @media(max-width:500px){
+            div.empty{display:block;}
+            div.vertical{display:none;}
+            div.horizontal{display:none;}
+        }
+        @media(min-width:601px){
+            div.empty{display:none;}
+            div.vertical{display:none;}
+            div.horizontal{display:block;}
+        }
+        
+        
+        .result{    /*display부분*/
+            width: 340px;
+            height:50px;
+            font-size:2em;
+            border:1px solid#999999;
+            /*margin:10px 0 5px 0; 위 오른쪽 아래 왼쪽순*/
+            margin-bottom: 5px;
+            background-color: #ffffff;
+            padding:10px;
+            text-align:right;
+        }
+        .result2{
+            width:500px;
+            height:48px;
+            font-size:2em;
+            border:1px solid#999999;
+            background-color: #ffffff;
+            margin-bottom: 5px;
+            padding:10px;
+            text-align:right;
+            
+        }
+        
+        table{ /*테이블*/
+            
+            border:1px solid#000000;
+            text-align:center;
+            background-color: #f0f0f0;
+            padding:15px 15px 15px 15px;
+            border-radius: 10px;
+        }
+
+        td{
+            padding:2px;
+            text-align:center;
+        }
+
+        button.button{
+            width: 100px;
+            height: 100px; 
+            color:#444444; 
+            background-color: #dddddd;
+            border:1px solid #cccccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 2em;
+            cursor:pointer; /*마우스 커서 올리면 누를수있는 커서로 바뀜 */
+        }
+        button.num{ /*버튼 숫자*/
+            
+            
+            color:black;
+            background-color: #FAFAFA;
+            font-weight: bold;
+        }
+        button.operater{ /*버튼 노란부분*/
+            
+            
+            background-color: #ffcc00;
+            color:#333333;
+            font-weight:bold;
+        }
+        .button:hover{
+            background-color: #fab6b6; /*커서 올리면 버튼색이 변함*/
+        }
+    </style>
+</head>
+<body>
+    <div class="empty"><p>표시할수 없음.</p></div>
+
+    <div class="vertical">
+        <table width="360" height="660">
+        
+            <tr><th colspan=4 class="result"><span id="display1">0</span></th></tr>
+            <tr>
+                <td><button class="button">mc</button></td>
+                <td><button class="button">mr</button></td>
+                <td><button class="button">m-</button></td>
+                <td><button class="button">m+</button></td>
+            </tr>
+            <tr>
+                <td><button class="button" onclick="clearDisplay()">CE</button></td>
+                <td><button class="button">√x</button></td>
+                <td><button class="button">%</button></td>
+                <td><button class="button operater" onclick="operatorButton('÷')">÷</button></td>
+            </tr>
+            <tr>
+                <td><button class="button num" onclick="numberbutton(7);">7</button></td>
+                <td><button class="button num" onclick="numberbutton(8);">8</button></td>
+                <td><button class="button num" onclick="numberbutton(9);">9</button></td>
+                <td><button class="button operater" onclick="operatorButton('x')">x</button></td>
+            </tr>
+            <tr>
+                <td><button class="button num" onclick="numberbutton(4);">4</button></td>
+                <td><button class="button num" onclick="numberbutton(5);">5</button></td>
+                <td><button class="button num" onclick="numberbutton(6);">6</button></td>
+                <td><button class="button operater" onclick="operatorButton('-')">-</button></td>
+            </tr>
+            <tr>
+                <td><button class="button num" onclick="numberbutton(1);">1</button></td>
+                <td><button class="button num" onclick="numberbutton(2);">2</button></td>
+                <td><button class="button num" onclick="numberbutton(3);">3</button></td>
+                <td><button class="button operater" onclick="operatorButton('+')">+</button></td>
+            </tr>
+            <tr>
+                <td><button class="button num" onclick="numberbutton(0);">0</button></td>
+                <td><button class="button num"  onclick="decimalButton()">.</button></td>
+                <td><button class="button num">+/-</button></td>
+                <td><button class="button operater" onclick="equalButton()">=</button></td>
+            </tr>
+            <tr>
+                <td><button class="button">π</button></td>
+                <td><button class="button">x<sup>y</sup></button></td>
+                <td><button class="button">R2</button></td>
+                <td><button class="button">R0</button></td>
+            </tr>
+            
+        </table>
+        
+    </div>
+    <div class="horizontal">
+        <table width="540" height="480">
+            <tr><td colspan="7" class="result2"><span id="display2">0</span></td></tr>
+            <tr>
+                <td><button class="button">mc</button></td>
+                <td><button class="button">m+</button></td>
+                <td><button class="button num" onclick="numberbutton(7);">7</button></td>
+                <td><button class="button num" onclick="numberbutton(8);">8</button></td>
+                <td><button class="button num" onclick="numberbutton(9);">9</button></td>
+                <td><button class="button operater" onclick="operatorButton('÷')">÷</button></td>
+                <td><button class="button">R2</button></td>
+            </tr>
+            <tr>
+                <td><button class="button">m-</button></td>
+                <td><button class="button">mr</button></td>
+                <td><button class="button num" onclick="numberbutton(4);">4</button></td>
+                <td><button class="button num" onclick="numberbutton(5);">5</button></td>
+                <td><button class="button num" onclick="numberbutton(6);">6</button></td>
+                <td><button class="button operater" onclick="operatorButton('x')">x</button></td>
+                <td><button class="button">R0</button></td>
+            </tr>
+            <tr>
+                <td><button class="button">π</button></td>
+                <td><button class="button">x<sup>y</sup></button></td>
+                <td><button class="button num" onclick="numberbutton(1);">1</button></td>
+                <td><button class="button num" onclick="numberbutton(2);">2</button></td>
+                <td><button class="button num" onclick="numberbutton(3);">3</button></td>
+                <td><button class="button operater" onclick="operatorButton('-')">-</button></td>
+                <td><button class="button" onclick="clearDisplay()">CE</button></td>
+            </tr>
+            <tr>
+                <td><button class="button">√x</button></td>
+                <td><button class="button">%</button></td>
+                <td><button class="button num" onclick="numberbutton(0);">0</button></td>
+                <td><button class="button num"  onclick="decimalButton()">.</button></td>
+                <td><button class="button num">+/-</button></td>
+                <td><button class="button operater" onclick="operatorButton('+')">+</button></td>
+                <td><button class="button operater" onclick="equalButton()">=</button></td>
+            </tr>
+            
+        </table>
+    </div>
+    <script>
+        
+        let currentInput = '0';
+        let prevInput = '0';
+        let operator = '';
+        let decimalClicked = false;
+
+        function numberbutton(num) {
+            if (currentInput === '0') {
+                currentInput = num.toString();
+            } else {
+                currentInput += num.toString();
+            }
+            updateDisplay(currentInput);
+        }
+
+        function updateDisplay(value) {
+            document.getElementById('display1').innerText = value;
+            document.getElementById('display2').innerText = value;
+        }
+
+        function clearDisplay() {
+            currentInput = '0';
+            prevInput = '0';
+            operator = '';
+            decimalClicked = false;
+            updateDisplay(currentInput);
+        }
+
+        function operatorButton(op) {
+            if (op === '=') {
+                calculate();
+                operator = '';
+            } else {
+                // 현재 입력이 '0'이 아니라면 계산을 먼저 수행
+                if (currentInput !== '0') {
+                    calculate();
+                }
+                // 이전 입력을 유지한 채로 현재 입력 초기화
+                currentInput = '0';
+                operator = op;
+                decimalClicked = false;
+            }
+        }
+
+        function calculate() {
+            let result;
+            const prev = parseFloat(prevInput);
+            const current = parseFloat(currentInput);
+            switch (operator) {
+                case '+':
+                    result = prev + current;
+                    break;
+                case '-':
+                    result = prev - current;
+                    break;
+                case 'x':
+                    result = prev * current;
+                    break;
+                case '÷':
+                    result = prev / current;
+                    break;
+                default:
+                    result = current;
+            }
+            prevInput = result.toString();
+            currentInput = '0';
+            updateDisplay(result.toString());
+        }
+
+        function decimalButton() {
+            if (!decimalClicked) {
+                currentInput += '.';
+                decimalClicked = true;
+                updateDisplay(currentInput);
+            }
+        }
+        
+        function nanugiButton() {
+            operatorButton('÷');
+        }
+        
+        function gopagiButton() {
+            operatorButton('x');
+        }
+        
+        function minusButton() {
+            operatorButton('-');
+        }
+        
+        function plusButton() {
+            operatorButton('+');
+        }
+        
+        function equalButton() {
+            operatorButton('=');
+        }
+    </script>
+</body>
+</html> 
